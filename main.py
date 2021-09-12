@@ -2,6 +2,7 @@ import shutil
 import subprocess
 import os
 import argparse
+from time import sleep
 
 def move_images(sourcefiles,sourcepath):
     for item in sourcefiles:
@@ -138,5 +139,5 @@ while True:
             else:
                 os.remove(HOME_DIR + '/Misc. Downloads/' + f.split('/')[-1])    
                 shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/')
-
+    sleep(5) #run every 5 seconds
 
