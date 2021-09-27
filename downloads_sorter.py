@@ -163,5 +163,5 @@ while True:
                 shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/')
             else:
                 shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/copy ' + f)
-    sleep(5) #run every 5 seconds
+    sleep(10) #run every 5 seconds
 
