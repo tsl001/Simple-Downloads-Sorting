@@ -7,14 +7,21 @@ from time import sleep
 def move_images(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.jpg') or item.endswith('.jpeg') or item.endswith('.png') or item.endswith('.gif'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Image Downloads/')
+            if not os.path.exists(HOME_DIR + '/Image Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Image Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Image Downloads/copy ' + item)
+
     if args.DEBUG == 1:
         print('Images done moving')
 
 def move_documents(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.docx') or item.endswith('.doc'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Document Downloads/')
+            if not os.path.exists(HOME_DIR + '/Document Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Document Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Document Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('Documents done moving')
@@ -22,7 +29,10 @@ def move_documents(sourcefiles,sourcepath):
 def move_music(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.mp3') or item.endswith('.wav'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Music Downloads/')
+            if not os.path.exists(HOME_DIR + '/Music Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Music Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Music Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('Music done moving')
@@ -30,7 +40,10 @@ def move_music(sourcefiles,sourcepath):
 def move_compressed(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.zip') or item.endswith('.7z'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Compressed Files Downloads/')
+            if not os.path.exists(HOME_DIR + '/Compressed Files Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Compressed Files Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Compressed Files Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('Compressed files done moving')
@@ -38,18 +51,21 @@ def move_compressed(sourcefiles,sourcepath):
 def move_powerpoint(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.pptx') or item.endswith('.ppt'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Powerpoint Downloads/')
+            if not os.path.exists(HOME_DIR + '/Powerpoint Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Powerpoint Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Powerpoint Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('Powerpoint files done moving')
 
 def move_apps(sourcefiles,sourcepath):
     for item in sourcefiles:
-        if item.endswith('.app') and not os.path.exists(HOME_DIR + '/App Downloads/' + item.split('/')[-1]):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/App Downloads/')
-        elif item.endswith('.app') and os.path.exists(HOME_DIR + '/App Downloads/' + item.split('/')[-1]):
-            os.remove(HOME_DIR + '/App Downloads/' + item.split('/')[-1])    
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/App Downloads/')
+        if item.endswith('.app'):
+            if not os.path.exists(HOME_DIR + '/App Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/App Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/App Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('App files done moving')
@@ -57,7 +73,10 @@ def move_apps(sourcefiles,sourcepath):
 def move_videos(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.mp4') or item.endswith('.mkv') or item.endswith('.mlv') or item.endswith('.MOV'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Video Downloads/')
+            if not os.path.exists(HOME_DIR + '/Video Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Video Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Video Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('Video files done moving')
@@ -65,7 +84,10 @@ def move_videos(sourcefiles,sourcepath):
 def move_texts(sourcefiles,sourcepath):
     for item in sourcefiles:
         if item.endswith('.txt'):
-            shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Text Downloads/')
+            if not os.path.exists(HOME_DIR + '/Text Downloads/' + item):
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Text Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,item),HOME_DIR + '/Text Downloads/copy ' + item)
 
     if args.DEBUG == 1:
         print('Text files done moving')
@@ -116,7 +138,10 @@ while True:
 
     for f in sourcefiles:
         if f.endswith('.pdf'):
-            shutil.move(f,HOME_DIR + '/PDF Downloads/')
+            if not os.path.exists(HOME_DIR + '/PDF Downloads/' + f.split('/')[-1]):
+                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/PDF Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/PDF Downloads/copy ' + f)
 
     if args.DEBUG == 1:
         print('PDFs done moving')
@@ -126,7 +151,7 @@ while True:
     move_images(sourcefiles,sourcepath)
     move_music(sourcefiles,sourcepath)
     move_powerpoint(sourcefiles,sourcepath)
-    #move_apps()
+    move_apps(sourcefiles,sourcepath)
     move_videos(sourcefiles,sourcepath)
     move_texts(sourcefiles,sourcepath)
 
@@ -137,7 +162,6 @@ while True:
             if not os.path.exists(HOME_DIR + '/Misc. Downloads/' + f.split('/')[-1]):
                 shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/')
             else:
-                os.remove(HOME_DIR + '/Misc. Downloads/' + f.split('/')[-1])    
-                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/')
+                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/copy ' + f)
     sleep(5) #run every 5 seconds
 
