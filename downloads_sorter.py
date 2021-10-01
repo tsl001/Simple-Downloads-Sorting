@@ -92,6 +92,16 @@ def move_texts(sourcefiles,sourcepath):
     if args.DEBUG == 1:
         print('Text files done moving')
 
+def move_pdfs(sourcefiles,sourcepath):
+    for f in sourcefiles:
+        if f.endswith('.pdf'):
+            if not os.path.exists(HOME_DIR + '/PDF Downloads/' + f.split('/')[-1]):
+                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/PDF Downloads/')
+            else:
+                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/PDF Downloads/copy ' + f)
+
+    if args.DEBUG == 1:
+        print('PDFs done moving')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--DEBUG',type=int,default=0,help='Will print when files are done moving if set to 1')
@@ -135,17 +145,20 @@ sourcepath = HOME_DIR + '/Downloads/'
 
 while True:
     sourcefiles = os.listdir(sourcepath)
+    
+    containsPart = False
 
     for f in sourcefiles:
-        if f.endswith('.pdf'):
-            if not os.path.exists(HOME_DIR + '/PDF Downloads/' + f.split('/')[-1]):
-                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/PDF Downloads/')
-            else:
-                shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/PDF Downloads/copy ' + f)
+        if f.endswith('.part') or f.endswith('.download'):
+           containsPart = True
+           break     
+    
+    if containsPart:
+        continue
 
-    if args.DEBUG == 1:
-        print('PDFs done moving')
+    sleep(10)
 
+    move_pdfs(sourcefiles,sourcepath)
     move_compressed(sourcefiles,sourcepath)
     move_documents(sourcefiles,sourcepath)
     move_images(sourcefiles,sourcepath)
@@ -158,10 +171,10 @@ while True:
     sourcefiles = os.listdir(sourcepath)
 
     for f in sourcefiles:
-        if not f.endswith('.download'):
+        if not f.endswith('.download') and not f.endswith('.part'):
             if not os.path.exists(HOME_DIR + '/Misc. Downloads/' + f.split('/')[-1]):
                 shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/')
             else:
                 shutil.move(os.path.join(sourcepath,f),HOME_DIR + '/Misc. Downloads/copy ' + f)
-    sleep(10) #run every 5 seconds
+    sleep(5) #run every 5 seconds
 
